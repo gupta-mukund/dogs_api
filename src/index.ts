@@ -20,3 +20,5 @@ const fetchDogs = async (url: string) => {
   let data = await result.json();
   return data.message;
 };
+
+console.log("prova");
