@@ -35,11 +35,6 @@ const fetchDogs = async (url: string) => {
   let data = await result.json();
   return data.message;
 };
-const fetchImages = async (url: string) => {
-  let result = await fetch(url);
-  let data = await result.json();
-  return await (<string[]>data.message).splice(0, 10);
-};
 
 class Slider {
   private static image: number = 0;
@@ -49,12 +44,18 @@ class Slider {
     this.image = 0;
     this.hasAlreadyChanged <= 1 && this.addClasses();
 
-    this.result = await fetchImages(
+    this.result = await this.fetchImages(
       `https://dog.ceo/api/breed/${event.value}/images`
     );
 
     IMAGE_BOX.style.backgroundImage = `url(${this.result[0]})`;
   };
+
+  private static async fetchImages(url: string) {
+    let result = await fetch(url);
+    let data = await result.json();
+    return await (<string[]>data.message).splice(0, 10);
+  }
   private static addClasses() {
     ARROWS.forEach((el) => {
       el.classList.add("arrow");

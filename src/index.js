@@ -36,12 +36,14 @@ const fetchDogs = (url) => __awaiter(void 0, void 0, void 0, function* () {
     let data = yield result.json();
     return data.message;
 });
-const fetchImages = (url) => __awaiter(void 0, void 0, void 0, function* () {
-    let result = yield fetch(url);
-    let data = yield result.json();
-    return yield data.message.splice(0, 10);
-});
 class Slider {
+    static fetchImages(url) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let result = yield fetch(url);
+            let data = yield result.json();
+            return yield data.message.splice(0, 10);
+        });
+    }
     static addClasses() {
         ARROWS.forEach((el) => {
             el.classList.add("arrow");
@@ -82,6 +84,6 @@ Slider.hasAlreadyChanged = 0;
 Slider.displayImages = (event) => __awaiter(void 0, void 0, void 0, function* () {
     _a.image = 0;
     _a.hasAlreadyChanged <= 1 && _a.addClasses();
-    _a.result = yield fetchImages(`https://dog.ceo/api/breed/${event.value}/images`);
+    _a.result = yield _a.fetchImages(`https://dog.ceo/api/breed/${event.value}/images`);
     IMAGE_BOX.style.backgroundImage = `url(${_a.result[0]})`;
 });
